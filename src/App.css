@@ -1,38 +1,43 @@
-.App {
+@font-face {
+  font-family: 'Sono';
+  src: url('./font/Sono-Regular.woff2') format('woff2');
+}
+
+.main-background {
+  background-color: #16161f;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-header {
+  font-family: 'Sono';
+  color: white;
+  font-size: 4em;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.sub-header {
+  font-family: 'Sono';
+  color: white;
+  font-size: 1.5em;
+  text-align: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.play-row {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center;
+
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.play-button {
+  width: 30%;
+  height: 4%;
+  background-color: green;
+  border-style: solid;
+  text-align: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}

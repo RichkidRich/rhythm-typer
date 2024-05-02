@@ -1,0 +1,31 @@
+
+1. load file from song
+    1.5a Check for offset and demostart for song file
+    1.5b Add maker tag
+2. search from difficulty section
+    2.5a Read balloon data
+    2.5b Read score based data
+    2.5c Show Note designer
+3. #START indicates beginning of song
+4. 1=don, 2=ka, 3=big don, 4=big ka, 5=small drum roll, 6=big drum roll, 7=balloon start, 8=roll end, 9=mallet
+5. ignore p values, default branch start to hardest
+6. preload timing windows into object
+7. when timing window is live, check for hit
+    7.5a if hit in timing window, check hit is correct key
+    7.5b if timing window passes with no hit, mark miss
+8. song ends, post process
+
+Notes:
+don and ka will be regular text
+
+Formula to get the amount of milliseconds per measure: 60000 * measure * 4 / BPM
+
+
+#SCROLL multiply default scroll speed
+#DELAY offset next  notation
+
+#GOGO START #GOGO END: multiply score by 1.2
+
+Plan: 
+1. Parse tja file into timing windows, window can be hit with any key
+2. Change to hit with specific key
