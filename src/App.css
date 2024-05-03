@@ -8,7 +8,7 @@
   height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: start;
 }
 
 .main-header {
@@ -39,5 +39,220 @@
   background-color: green;
   border-style: solid;
   text-align: center;
+}
+
+.don {
+  position: absolute;
+
+  width: 20vw;
+  height: 20vw;
+
+  background-color: #ff3a3a;
+  border-style: solid;
+  border-color: white;
+  border-width: 2px;
+  border-radius: 50%;
+
+  top: 65%;
+  left: 30%;
+}
+
+.ka {
+  position: absolute;
+
+  width: 20vw;
+  height: 20vw;
+
+  background-color: #3a8fff;
+  border-style: solid;
+  border-color: white;
+  border-width: 2px;
+  border-radius: 50%;
+  
+  top: 65%;
+  left: 55%;
+}
+
+.bar {
+  position: absolute;
+
+  width: 20vw;
+  height: 20vw;
+
+  background-color: #007032;
+  border-style: solid;
+  border-color: white;
+  border-width: 2px;
+  border-radius: 50%;
+  
+  top: 25%;
+  left: 45%;
+}
+
+@keyframes slide {
+  0% {
+    transform: translateX(100vw);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+
+}
+
+.sliding {
+  animation: slide linear infinite;
+}
+
+.fullchart {
+  position: absolute;
+  top: 45%;
+  left: 0%;
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 151.3vw);
+  gap: 0;
+  grid-auto-rows: 50vw;
+  overflow-x: auto;
+
+  padding: 0!important;
+
+  margin-top: 2%!important;
+
+  border-style: solid;
+  border-width: 2px;
+  border-color: greenyellow;
+}
+
+.empty-note {
+  width: 7vw;
+  height: 7vw;
+
+  background-color: #16161f00;
+  border-style: solid;
+  border-color: rgb(255, 255, 255);
+  border-width: 2px;
+  border-radius: 50%;
+
+  display: flex;
+
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.mallet-note {
+  width: 7vw;
+  height: 7vw;
+
+  background-color: #ff60e4;
+  border-style: solid;
+  border-color: rgb(255, 255, 255);
+  border-width: 2px;
+  border-radius: 50%;
+
+  display: flex;
+
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.single-note {
+  width: 7vw;
+  height: 7vw;
+
+  background-color: #ff4444;
+  border-style: solid;
+  border-color: white;
+  border-width: 2px;
+  border-radius: 50%;
+
+  display: flex;
+
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 3rem;
+}
+
+.balloon-note {
+  width: 7vw;
+  height: 7vw;
+
+  background-color: #54ee7b;
+  border-style: solid;
+  border-color: white;
+  border-width: 2px;
+  border-radius: 50%;
+
+  display: flex;
+
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 3rem;
+
+}
+
+.roll-note {
+  height: 7vw;
+
+  background-color: #ffdd6b;
+  border-style: solid;
+  border-color: white;
+  border-width: 2px;
+  border-radius: 50px;
+
+  display: flex;
+
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 3rem;
+}
+
+.single-bar {
+  border-style: solid;
+  border-width: 2px;
+  border-color: turquoise;
+
+  height: 25vh;
+  align-items: center;
+}
+
+.beat-width-1 {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+}
+
+.beat-width-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.beat-width-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.beat-width-8 {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+}
+
+.beat-width-16 {
+  display: grid;
+  grid-template-columns: repeat(16, 1fr);
+}
+
+.beat-width-48 {
+  display: grid;
+  grid-template-columns: repeat(48, 1fr);
 }
 

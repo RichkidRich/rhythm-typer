@@ -89,7 +89,7 @@ const processSong = async (tjaFile, setSongProcessed, setSongData) => {
             }
         }
         if (!beginChartProcess) {
-            if (line.includes('COURSE:') && line.toUpperCase().includes('HARD')) {
+            if (line.includes('COURSE:') && line.toUpperCase().includes('NORMAL')) {
                 beginChartProcess = true;
                 continue;
             }
