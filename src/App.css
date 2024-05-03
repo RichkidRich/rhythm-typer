@@ -89,6 +89,17 @@
   left: 45%;
 }
 
+.current-word-render {
+  display: flex!important;
+  color: white;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Sono';
+  font-size: 4rem;
+  margin-top: 5%!important;
+  text-align: center!important;
+}
+
 @keyframes slide {
   0% {
     transform: translateX(100vw);
@@ -130,7 +141,7 @@
 
   background-color: #16161f00;
   border-style: solid;
-  border-color: rgb(255, 255, 255);
+  border-color: rgba(255, 255, 255, 0);
   border-width: 2px;
   border-radius: 50%;
 
@@ -139,7 +150,7 @@
   text-align: center;
   justify-content: center;
   align-items: center;
-  color: white;
+  color: rgba(255, 255, 255, 0);
 }
 
 .mallet-note {

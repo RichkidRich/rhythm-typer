@@ -37,6 +37,10 @@ function App() {
 
   const [chartBars, setChartBars] = useState([]);
 
+  const [roundWords, setRoundWords] = useState([]);
+  const [currentWordRender, setCurrentWordRender] = useState(0);
+  const [currentWordRenderIndex, setCurrentWordRenderIndex] = useState(0);
+
   const handleNewBeat = () => {
     // console.log(`count: ${beatCounter}`);
     if (songStarted) {
@@ -60,19 +64,16 @@ function App() {
       }
 
       if (beatCounter === 0 && parseInt(frameData[frameIndex]) > 0 && parseInt(frameData[frameIndex]) < 8){
+        console.log(roundWords[currentWordRender]);
+        console.log(currentWordRender, currentWordRenderIndex)
         // console.log(`play ${frameData[frameIndex]}`);
-        if (frameData[frameIndex] === '1') {
-          // setShowDon(true);
-          // setShowKa(false);
-        } else if (frameData[frameIndex] === '2') {
-          // setShowKa(true);
-          // setShowDon(false);
-        } else if (frameData[frameIndex] === '3') {
-          // setShowDon(true);
-          // setShowKa(false);
-        } else if (frameData[frameIndex] === '4') {
-          // setShowKa(true);
-          // setShowDon(false);
+        if (frameData[frameIndex] === '1' || frameData[frameIndex] === '2' || frameData[frameIndex] === '3' || frameData[frameIndex] === '4') {
+          if (currentWordRenderIndex + 1 === roundWords[currentWordRender].length) {
+            setCurrentWordRender(currentWordRender + 1);
+            setCurrentWordRenderIndex(0);
+          } else {
+            setCurrentWordRenderIndex(currentWordRenderIndex + 1);
+          }
         } else if (frameData[frameIndex] === '5' || frameData[frameIndex] === '6') {
           // setShowDon(true);
           // setShowKa(true);
@@ -85,7 +86,7 @@ function App() {
         // setShowKa(false);
       }
 
-      // console.log(`frameIndex: ${frameIndex}, beatsPerIndex: ${beatsPerIndex}, beatCounter: ${beatCounter}, frameLength: ${frameLength}`);
+      console.log(`frameIndex: ${frameIndex}, beatsPerIndex: ${beatsPerIndex}, beatCounter: ${beatCounter}, frameLength: ${frameLength}`);
 
       if ((frameIndex + 1 === frameLength) && (beatCounter + 1 === beatsPerIndex)) {
         setCurrentFrameIndex(0);
@@ -110,8 +111,9 @@ function App() {
     handleNewBeat
   );
 
-  const generateTargetParagraph = (numWords) => {
-    const text = generate({ minLength: 3, maxLength: wordDifficulty, join: ' ', exactly: numWords });
+  const generateTargetParagraph = (numCharacters) => {
+    const text = generate({ minLength: 3, maxLength: wordDifficulty, join: ' ', exactly: numCharacters * 3 });
+    return text;
   };
 
   const loadSong = async (setSongProcessed, setSongData) => {
@@ -131,7 +133,7 @@ function App() {
         songAudio.play();
         setSongStarted(true);
       }, (Math.ceil(60000 * 1 * 4 / (songData ? songData.bpm : 180))/BEAT_INTERVAL) + Math.ceil(60000 * 1 * 4 / (songData ? songData.bpm : 180)) / 1.5);
-      // startMetronome();
+      startMetronome();
     } else {
       console.log('Song audio not loaded');
     }
@@ -147,19 +149,28 @@ function App() {
   let ballooning = false;
   let currentBallooning = 1;
 
+  let currentWord = 0;
+  let currentWordChar = 0;
+
   const buildBarRender = (frameNumbers) => {
-    console.log('rendering bar', frameNumbers)
     const hitPointRender = [];
 
+    // console.log(currentWord, currentWordChar)
 
     for (let i = 0; i < frameNumbers.length; i++) {
-      console.log(`frame number ${frameNumbers[i]} and i ${i}`);
+      // console.log(`frame number ${frameNumbers[i]} and i ${i}`);
       if (frameNumbers[i] === '1' || frameNumbers[i] === '2' || frameNumbers[i] === '3' || frameNumbers[i] === '4') {
         hitPointRender.push(
           <div className="single-note">
-            {frameNumbers[i]}
+            {(roundWords[currentWord])[currentWordChar]}
           </div>
         );
+        if (currentWordChar + 1 === roundWords[currentWord].length) {
+          currentWord++;
+          currentWordChar = 0;
+        } else {  
+          currentWordChar++;
+        }
       } else if (frameNumbers[i] === '0' && !rolling && !ballooning) {
         hitPointRender.push(
           <div className="empty-note">
@@ -178,7 +189,7 @@ function App() {
 
         hitPointRender.push(
           <div style={rollStyle} className='roll-note'>
-            {frameNumbers[i]}
+            
           </div>
         );
       } else if (frameNumbers[i] === '7') {
@@ -193,17 +204,21 @@ function App() {
 
         hitPointRender.push(
           <div style={balloonStyle} className='balloon-note'>
-            {frameNumbers[i]}
+            
           </div>
         );
       } else if (frameNumbers[i] === '9') {
         hitPointRender.push(
           <div className="mallet-note">
-            {frameNumbers[i]}
+            
           </div>
         );
       }
     }
+
+    setCurrentWordRender(currentWord);
+    setCurrentWordRenderIndex(currentWordChar);
+
     return (
       <div className={`single-bar beat-width-${frameNumbers.length}`}>
         {hitPointRender}
@@ -213,10 +228,12 @@ function App() {
 
   const renderChart = async (tempData) => {
     const tempBars = chartBars;
+
     tempData.noteData.forEach((frame, index) => {
-      console.log('rendering frame ' + index)
       tempBars.push(buildBarRender(frame));
     });
+    currentWord = 0;
+    currentWordChar = 0;
     setChartBars(tempBars);
   }
 
@@ -229,6 +246,10 @@ function App() {
     if (songProcessed) {
       console.log('Processed Song Data:');
       console.log(songData);
+      const totalCharacters = songData.noteData.reduce((sum, note) => sum + note.length, 0);
+      const wordArray = generateTargetParagraph(totalCharacters).split(' ');
+      console.log(wordArray)
+      setRoundWords(wordArray);
       setSongAudio(new Audio(process.env.PUBLIC_URL + songData.songSource));
     }
   }, [songProcessed]);
@@ -266,6 +287,9 @@ function App() {
         </Row>
         <Row className="play-row">
           <div className="play-button" onClick={startSong}>PLAY</div>
+        </Row>
+        <Row className="current-word-render">
+          {roundWords[currentWordRender]}
         </Row>
       </Container>
       <div className='fullchart'>
